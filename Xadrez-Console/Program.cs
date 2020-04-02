@@ -1,9 +1,16 @@
 ﻿using System;
+using board;
 
 namespace Xadrez_Console {
     class Program {
         static void Main(string[] args) {
-            Console.WriteLine("Hello World!");
+
+            Position P;
+            P = new Position(3, 4);
+
+
+
+
         }
     }
 }
