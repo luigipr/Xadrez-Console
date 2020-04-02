@@ -4,14 +4,18 @@ using System.Text;
 
 namespace board {
     class Board {
-        public int Linhas { get; set; }
-        public int Colunas { get; set; }
+        public int Lines { get; set; }
+        public int Columns { get; set; }
         private Piece[,] Pieces;
 
-        public Board(int linhas, int colunas) {
-            Linhas = linhas;
-            Colunas = colunas;
-            Pieces = new Piece[linhas, colunas];
+        public Board(int lines, int columns) {
+            Lines = lines;
+            Columns = columns;
+            Pieces = new Piece[lines, columns];
+        }
+
+        public Piece piece(int line, int column) {
+            return Pieces[line, column];
         }
     }
 }
