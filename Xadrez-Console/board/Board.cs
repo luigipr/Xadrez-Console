@@ -17,5 +17,11 @@ namespace board {
         public Piece piece(int line, int column) {
             return Pieces[line, column];
         }
+
+        public void dropPiece(Piece p, Position pos) {
+            Pieces[pos.lines, pos.columns] = p;
+            p.Position = pos;
+        }
+
     }
 }

@@ -4,16 +4,16 @@ using System.Text;
 
 namespace board {
     class Position {
-        public int linha { get; set; }
-        public int coluna { get; set; }
+        public int lines { get; set; }
+        public int columns { get; set; }
 
-        public Position(int linha, int coluna) {
-            this.linha = linha;
-            this.coluna = coluna;
+        public Position(int line, int column) {
+            this.lines = line;
+            this.columns = column;
         }
 
         public override string ToString() {
-            return linha + ", " + coluna;
+            return lines + ", " + columns;
         }
     }
 }

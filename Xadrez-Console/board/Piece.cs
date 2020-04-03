@@ -10,11 +10,13 @@ namespace board {
         public int MovementTimes { get; protected set; }
         public Board Tab { get; protected set; }
 
-        public Piece(Position position, Color color, Board tab) {
-            Position = position;
-            Color = color;
+        public Piece(Board tab, Color color) {
+            Position = null;
             Tab = tab;
+            Color = color;            
             MovementTimes = 0;
         }
+
+
     }
 }
