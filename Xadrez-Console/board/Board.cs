@@ -35,6 +35,16 @@ namespace board {
             p.Position = pos;
         }
 
+        public Piece RemovePiece(Position pos) {
+            if (piece(pos) == null) {
+                return null;
+            }
+            Piece aux = piece(pos);
+            aux.Position = null;
+            Pieces[pos.lines, pos.columns] = null;
+            return aux;
+        }
+
         public bool ValidPosition(Position pos) {
             if (pos.lines < 0 || pos.lines >= Lines || pos.columns < 0 || pos.columns >= Columns) {
                 return false;

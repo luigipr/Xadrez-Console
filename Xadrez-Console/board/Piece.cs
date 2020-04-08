@@ -17,6 +17,9 @@ namespace board {
             MovementTimes = 0;
         }
 
+         public void MovementIncrease() {
+            MovementTimes++;
+        }
 
     }
 }
