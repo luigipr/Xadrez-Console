@@ -21,6 +21,22 @@ namespace board {
             MovementTimes++;
         }
 
+        public bool ExistingPossibleMovements() {
+            bool[,] mat = possibleMovements();
+            for (int i=0; i<Tab.Lines; i++) {
+                for (int j=0; j<Tab.Columns; j++) {
+                    if (mat[i,j]) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool CanMoveTo(Position pos) {
+            return possibleMovements()[pos.lines, pos.columns];
+        }
+
         public abstract bool[,] possibleMovements();
 
     }
