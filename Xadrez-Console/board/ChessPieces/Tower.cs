@@ -21,7 +21,7 @@ namespace ChessPieces {
             bool[,] mat = new bool[Tab.Lines, Tab.Columns];
             Position pos = new Position(0, 0);
             //N
-            pos.defineValues(pos.lines - 1, pos.columns);
+            pos.defineValues(Position.lines - 1, Position.columns);
             while (Tab.ValidPosition(pos) && CanMove(pos)) {
                 mat[pos.lines, pos.columns] = true;
                 if (Tab.piece(pos) != null && Tab.piece(pos).Color != Color) {
@@ -30,7 +30,7 @@ namespace ChessPieces {
                 pos.lines = pos.lines - 1;
             }
             //S
-            pos.defineValues(pos.lines + 1, pos.columns);
+            pos.defineValues(Position.lines + 1, Position.columns);
             while (Tab.ValidPosition(pos) && CanMove(pos)) {
                 mat[pos.lines, pos.columns] = true;
                 if (Tab.piece(pos) != null && Tab.piece(pos).Color != Color) {
@@ -39,7 +39,7 @@ namespace ChessPieces {
                 pos.lines = pos.lines + 1;
             }
             //R
-            pos.defineValues(pos.lines, pos.columns + 1);
+            pos.defineValues(Position.lines, Position.columns + 1);
             while (Tab.ValidPosition(pos) && CanMove(pos)) {
                 mat[pos.lines, pos.columns] = true;
                 if (Tab.piece(pos) != null && Tab.piece(pos).Color != Color) {
@@ -48,7 +48,7 @@ namespace ChessPieces {
                 pos.columns = pos.columns + 1;
             }
             //L
-            pos.defineValues(pos.lines, pos.columns - 1);
+            pos.defineValues(Position.lines, Position.columns - 1);
             while (Tab.ValidPosition(pos) && CanMove(pos)) {
                 mat[pos.lines, pos.columns] = true;
                 if (Tab.piece(pos) != null && Tab.piece(pos).Color != Color) {

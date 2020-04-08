@@ -12,5 +12,13 @@ namespace ChessPieces {
             return "P";
         }
 
+
+
+
+
+        public override bool[,] possibleMovements() {
+            bool[,] mat = new bool[Tab.Lines, Tab.Columns];
+            return mat;
+        }
     }
 }

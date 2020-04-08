@@ -12,5 +12,16 @@ namespace ChessPieces {
             return "Q";
         }
 
-    }
+
+        public override bool[,] possibleMovements() {
+            bool[,] mat = new bool[Tab.Lines, Tab.Columns];
+            return mat;
+        }
+
+
+
+
+
+
+        }
 }
