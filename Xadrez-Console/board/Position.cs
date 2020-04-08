@@ -12,6 +12,11 @@ namespace board {
             this.columns = column;
         }
 
+        public void defineValues(int line, int column) {
+            this.lines = line;
+            this.columns = column;
+        }
+
         public override string ToString() {
             return lines + ", " + columns;
         }
