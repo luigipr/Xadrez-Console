@@ -21,6 +21,10 @@ namespace board {
             MovementTimes++;
         }
 
+        public void MovementDecrease() {
+            MovementTimes--;
+        }
+
         public bool ExistingPossibleMovements() {
             bool[,] mat = possibleMovements();
             for (int i=0; i<Tab.Lines; i++) {

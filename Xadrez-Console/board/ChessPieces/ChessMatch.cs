@@ -12,6 +12,7 @@ namespace ChessPieces {
         public bool MatchFinish { get; private set; }
         private HashSet<Piece> pieces;
         private HashSet<Piece> captured;
+        public bool Check { get; private set; }
 
 
         public ChessMatch() {
@@ -22,9 +23,10 @@ namespace ChessPieces {
             captured = new HashSet<Piece>();
             PieceDropper();
             MatchFinish = false;
+            Check = false;
         }
 
-        public void MovementExecuter(Position origin, Position destination) {
+        public Piece MovementExecuter(Position origin, Position destination) {
             Piece p = tab.RemovePiece(origin);
             p.MovementIncrease();
             Piece capturedPiece = tab.RemovePiece(destination);
@@ -32,13 +34,35 @@ namespace ChessPieces {
             if (capturedPiece != null) {
                 captured.Add(capturedPiece);
             }
+            return capturedPiece;
         }
 
         public void PlayMaker(Position origin, Position destination) {
-            MovementExecuter(origin, destination);
+            Piece capturedPiece = MovementExecuter(origin, destination);
+
+            if (CheckCkecker(CurrentPlayer)) {
+                undoMovement(origin, destination, capturedPiece);
+                throw new BoardException("You can't put yourself on check!");
+            }
+            if (CheckCkecker(Oponent(CurrentPlayer))) {
+                Check = true;
+            } else {
+                Check = false;
+            }
             Turn++;
             ChangePlayer();
         }
+
+        public void undoMovement(Position origin, Position destination, Piece capturedPiece) {
+            Piece p = tab.RemovePiece(destination);
+            p.MovementDecrease();
+            if (capturedPiece != null) {
+                tab.dropPiece(capturedPiece, destination);
+                captured.Remove(capturedPiece);
+            }
+            tab.dropPiece(p, origin);
+        }
+
 
         public void ValidatePositionOrigin(Position pos) {
             if (tab.piece(pos) == null) {
@@ -88,6 +112,36 @@ namespace ChessPieces {
             aux.ExceptWith(CapturedPieces(color));
             return aux;
         }
+
+        private Color Oponent(Color color) {
+            if (color == Color.White) {
+                return Color.Black;
+            } else { return Color.White; }
+        }
+
+        private Piece king (Color color) {
+            foreach (Piece p in PiecesInGame(color)) {
+                if (p is King) {
+                    return p;
+                }
+            }
+            return null;
+        }
+
+        public bool CheckCkecker(Color color) {
+            Piece K = king(color);
+            if (K == null) {
+                throw new BoardException("There is no king of the assigned color on the board!");
+            }
+            foreach (Piece p in PiecesInGame(Oponent(color))) {
+                bool[,] mat = p.possibleMovements();
+                if (mat[K.Position.lines, K.Position.columns]) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
 
         public void NewPiecePlacer(char column, int line, Piece piece) {
             tab.dropPiece(piece, new ChessPosition(column, line).toPosition());
