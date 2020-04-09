@@ -6,6 +6,38 @@ using ChessPieces;
 
 namespace Xadrez_Console {
     class Screen {
+
+        public static void printMatch(ChessMatch match) {
+            printBoard(match.tab);
+            Console.WriteLine();
+            printCapturedPieces(match);
+            Console.WriteLine();
+            Console.WriteLine("Turn: " + match.Turn);
+            Console.WriteLine("Waiting play from: " + match.CurrentPlayer);
+        }
+
+        public static void printCapturedPieces(ChessMatch match) {
+            Console.WriteLine("Caught Pieces:");
+            Console.Write("Whites: ");
+            printSet(match.CapturedPieces(Color.White));
+            Console.WriteLine();
+            Console.Write("Blacks: ");
+            ConsoleColor aux = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            printSet(match.CapturedPieces(Color.Black));
+            Console.ForegroundColor = aux;
+            Console.WriteLine();
+        }
+
+        public static void printSet(HashSet<Piece> set) {
+            Console.Write("[");
+            foreach (Piece p in set) {
+                Console.Write(p + " ");
+            }
+            Console.Write("]");
+        }
+
+
         public static void printBoard(Board tab) {
             for (int i=0; i<tab.Lines; i++) {
                 Console.Write(8 - i + " ");
