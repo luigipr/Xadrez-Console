@@ -49,8 +49,13 @@ namespace ChessPieces {
             } else {
                 Check = false;
             }
-            Turn++;
-            ChangePlayer();
+            if (CheckmateTest(Oponent(CurrentPlayer))) {
+                MatchFinish = true;
+            }
+            else {
+                Turn++;
+                ChangePlayer();
+            }
         }
 
         public void undoMovement(Position origin, Position destination, Piece capturedPiece) {
@@ -141,6 +146,32 @@ namespace ChessPieces {
             }
             return false;
         }
+
+        public bool CheckmateTest(Color color) {
+            if (!CheckCkecker(color)) {
+                return false;
+            }
+            foreach (Piece p in PiecesInGame(color)) {
+                bool[,] mat = p.possibleMovements();
+                for (int i = 0; i<tab.Lines; i++) {
+                    for (int j=0; j<tab.Columns; j++) {
+                        if (mat[i,j]) {
+                            Position origin = p.Position;
+                            Position destination = new Position(i, j);
+                            Piece capturedPiece = MovementExecuter(origin, destination);
+                            bool checktest = CheckCkecker(color);
+                            undoMovement(origin, destination, capturedPiece);
+                            if (!checktest) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
+
 
 
         public void NewPiecePlacer(char column, int line, Piece piece) {

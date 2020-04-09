@@ -41,8 +41,9 @@ namespace Xadrez_Console {
                         Console.ReadLine();
                     }
                 }
-                
-                Screen.printBoard(match.tab);
+                Console.Clear();
+                Screen.printMatch(match);
+
             }
             catch (BoardException e) {
                 Console.WriteLine();

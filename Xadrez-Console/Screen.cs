@@ -13,11 +13,15 @@ namespace Xadrez_Console {
             printCapturedPieces(match);
             Console.WriteLine();
             Console.WriteLine("Turn: " + match.Turn);
-            Console.WriteLine("Waiting play from: " + match.CurrentPlayer);
-            if (match.Check) {
-                Console.WriteLine("You're on check!");
+            if (!match.MatchFinish) {
+                Console.WriteLine("Waiting play from: " + match.CurrentPlayer);
+                if (match.Check) {
+                    Console.WriteLine("You're on check!");
+                }
+            } else {
+                Console.WriteLine("Checkmate!");
+                Console.WriteLine("Winner: " + match.CurrentPlayer);
             }
-
         }
 
         public static void printCapturedPieces(ChessMatch match) {
