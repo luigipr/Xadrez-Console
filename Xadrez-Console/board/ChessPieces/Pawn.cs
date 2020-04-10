@@ -14,10 +14,16 @@ namespace ChessPieces {
 
         private bool ExistingOponent(Position pos) {
             Piece p = Tab.piece(pos);
-            return p != null || p.Color != Color;
+            if (p == null) {
+                return false;
+            }
+                if ( p.Color != Color) {
+                return true;
+            }
+            return false;
         }
 
-        private bool free(Position pos) {
+        private bool Free(Position pos) {
             return Tab.piece(pos) == null;
         }
 
@@ -27,11 +33,11 @@ namespace ChessPieces {
 
             if (Color == Color.White) {
                 pos.defineValues(Position.lines - 1, Position.columns);
-                if (Tab.ValidPosition(pos) && free(pos)) {
+                if (Tab.ValidPosition(pos) && Free(pos)) {
                     mat[pos.lines, pos.columns] = true;
                 }
                 pos.defineValues(Position.lines - 2, Position.columns);
-                if (Tab.ValidPosition(pos) && free(pos) && MovementTimes == 0) {
+                if (Tab.ValidPosition(pos) && Free(pos) && MovementTimes == 0) {
                     mat[pos.lines, pos.columns] = true;
                 }
                 pos.defineValues(Position.lines - 1, Position.columns - 1);
@@ -44,11 +50,11 @@ namespace ChessPieces {
                 }
             } else {
                 pos.defineValues(Position.lines + 1, Position.columns);
-                if (Tab.ValidPosition(pos) && free(pos)) {
+                if (Tab.ValidPosition(pos) && Free(pos)) {
                     mat[pos.lines, pos.columns] = true;
                 }
                 pos.defineValues(Position.lines + 2, Position.columns);
-                if (Tab.ValidPosition(pos) && free(pos) && MovementTimes == 0) {
+                if (Tab.ValidPosition(pos) && Free(pos) && MovementTimes == 0) {
                     mat[pos.lines, pos.columns] = true;
                 }
                 pos.defineValues(Position.lines + 1, Position.columns - 1);

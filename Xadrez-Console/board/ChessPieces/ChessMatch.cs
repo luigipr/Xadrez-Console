@@ -214,7 +214,6 @@ namespace ChessPieces {
             NewPiecePlacer('f', 7, new Pawn(tab, Color.Black));
             NewPiecePlacer('g', 7, new Pawn(tab, Color.Black));
             NewPiecePlacer('h', 7, new Pawn(tab, Color.Black));
-
         }
 
     }
