@@ -13,7 +13,7 @@ namespace board {
         public Piece(Board tab, Color color) {
             Position = null;
             Tab = tab;
-            Color = color;            
+            this.Color = color;            
             MovementTimes = 0;
         }
 

@@ -180,19 +180,41 @@ namespace ChessPieces {
         }
 
         private void PieceDropper() {
-            NewPiecePlacer('c', 1, new Tower(tab, Color.White));
-            NewPiecePlacer('c', 2, new Tower(tab, Color.White));
-            NewPiecePlacer('d', 2, new Tower(tab, Color.White));
-            NewPiecePlacer('e', 2, new Tower(tab, Color.White));
-            NewPiecePlacer('e', 1, new Tower(tab, Color.White));
-            NewPiecePlacer('d', 1, new King(tab, Color.White));
+            NewPiecePlacer('a', 1, new Tower(tab, Color.White));
+            NewPiecePlacer('b', 1, new Horse(tab, Color.White));
+            NewPiecePlacer('c', 1, new Bishop(tab, Color.White));
+            NewPiecePlacer('d', 1, new Queen(tab, Color.White));
+            NewPiecePlacer('e', 1, new King(tab, Color.White));
+            NewPiecePlacer('f', 1, new Bishop(tab, Color.White));
+            NewPiecePlacer('g', 1, new Horse(tab, Color.White));
+            NewPiecePlacer('h', 1, new Tower(tab, Color.White));
+            NewPiecePlacer('a', 2, new Pawn(tab, Color.White));
+            NewPiecePlacer('b', 2, new Pawn(tab, Color.White));
+            NewPiecePlacer('c', 2, new Pawn(tab, Color.White));
+            NewPiecePlacer('d', 2, new Pawn(tab, Color.White));
+            NewPiecePlacer('e', 2, new Pawn(tab, Color.White));
+            NewPiecePlacer('f', 2, new Pawn(tab, Color.White));
+            NewPiecePlacer('g', 2, new Pawn(tab, Color.White));
+            NewPiecePlacer('h', 2, new Pawn(tab, Color.White));
 
-            NewPiecePlacer('c', 7, new Tower(tab, Color.Black));
-            NewPiecePlacer('c', 8, new Tower(tab, Color.Black));
-            NewPiecePlacer('d', 7, new Tower(tab, Color.Black));
-            NewPiecePlacer('e', 7, new Tower(tab, Color.Black));
-            NewPiecePlacer('e', 8, new Tower(tab, Color.Black));
-            NewPiecePlacer('d', 8, new King(tab, Color.Black));
+
+            NewPiecePlacer('a', 8, new Tower(tab, Color.Black));
+            NewPiecePlacer('b', 8, new Horse(tab, Color.Black));
+            NewPiecePlacer('c', 8, new Bishop(tab, Color.Black));
+            NewPiecePlacer('d', 8, new Queen(tab, Color.Black));
+            NewPiecePlacer('e', 8, new King(tab, Color.Black));
+            NewPiecePlacer('f', 8, new Bishop(tab, Color.Black));
+            NewPiecePlacer('g', 8, new Horse(tab, Color.Black));
+            NewPiecePlacer('h', 8, new Tower(tab, Color.Black));
+            NewPiecePlacer('a', 7, new Pawn(tab, Color.Black));
+            NewPiecePlacer('b', 7, new Pawn(tab, Color.Black));
+            NewPiecePlacer('c', 7, new Pawn(tab, Color.Black));
+            NewPiecePlacer('d', 7, new Pawn(tab, Color.Black));
+            NewPiecePlacer('e', 7, new Pawn(tab, Color.Black));
+            NewPiecePlacer('f', 7, new Pawn(tab, Color.Black));
+            NewPiecePlacer('g', 7, new Pawn(tab, Color.Black));
+            NewPiecePlacer('h', 7, new Pawn(tab, Color.Black));
+
         }
 
     }
