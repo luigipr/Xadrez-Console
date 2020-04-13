@@ -13,6 +13,7 @@ namespace ChessPieces {
         private HashSet<Piece> pieces;
         private HashSet<Piece> captured;
         public bool Check { get; private set; }
+        public Piece EnPassantVulnerability { get; private set; }
 
 
         public ChessMatch() {
@@ -21,6 +22,7 @@ namespace ChessPieces {
             CurrentPlayer = Color.White;
             pieces = new HashSet<Piece>();
             captured = new HashSet<Piece>();
+            EnPassantVulnerability = null;
             PieceDropper();
             MatchFinish = false;
             Check = false;
@@ -48,6 +50,23 @@ namespace ChessPieces {
                 Piece T = tab.RemovePiece(Torigin);
                 tab.dropPiece(T, Tdestination);
             }
+            // #specialplay en passant
+            if (p is Pawn) {
+                if (origin.columns != destination.columns && capturedPiece == null) {
+                    Position Pawnpos;
+                    if (p.Color == Color.White) {
+                        Pawnpos = new Position(destination.lines + 1, destination.columns);
+                    }
+                    else {
+                        Pawnpos = new Position(destination.lines - 1, destination.columns);
+                    }
+                    capturedPiece = tab.RemovePiece(Pawnpos);
+                    captured.Add(capturedPiece);
+                }
+            }
+
+
+
             return capturedPiece;
         }
 
@@ -70,6 +89,14 @@ namespace ChessPieces {
                 Turn++;
                 ChangePlayer();
             }
+            Piece p = tab.piece(destination);
+            // #specialmove en passant
+            if (p is Pawn && (destination.lines == origin.lines - 2 || destination.lines == origin.lines + 2)) {
+                EnPassantVulnerability = p;
+            }
+            else {
+                EnPassantVulnerability = null;
+            }
         }
 
         public void undoMovement(Position origin, Position destination, Piece capturedPiece) {
@@ -79,6 +106,8 @@ namespace ChessPieces {
                 tab.dropPiece(capturedPiece, destination);
                 captured.Remove(capturedPiece);
             }
+            tab.dropPiece(p, origin);
+
             // #specialplay small castling
             if (p is King && destination.columns == origin.columns + 2) {
                 Position Torigin = new Position(origin.lines, origin.columns + 3);
@@ -95,7 +124,19 @@ namespace ChessPieces {
                 T.MovementDecrease();
                 tab.dropPiece(T, Torigin);
             }
-            tab.dropPiece(p, origin);
+            // #specialmove en passant
+            if (p is Pawn) {
+                if (origin.columns != destination.columns && capturedPiece == EnPassantVulnerability) {
+                    Piece pawn1 = tab.RemovePiece(destination);
+                    Position pawnpos;
+                    if (p.Color == Color.White) {
+                        pawnpos = new Position(3, destination.columns);
+                    } else {
+                        pawnpos = new Position(4, destination.columns);
+                    }
+                    tab.dropPiece(pawn1, pawnpos);
+                }
+            }       
         }
 
 
@@ -215,14 +256,14 @@ namespace ChessPieces {
             NewPiecePlacer('f', 1, new Bishop(tab, Color.White));
             NewPiecePlacer('g', 1, new Horse(tab, Color.White));
             NewPiecePlacer('h', 1, new Tower(tab, Color.White));
-            NewPiecePlacer('a', 2, new Pawn(tab, Color.White));
-            NewPiecePlacer('b', 2, new Pawn(tab, Color.White));
-            NewPiecePlacer('c', 2, new Pawn(tab, Color.White));
-            NewPiecePlacer('d', 2, new Pawn(tab, Color.White));
-            NewPiecePlacer('e', 2, new Pawn(tab, Color.White));
-            NewPiecePlacer('f', 2, new Pawn(tab, Color.White));
-            NewPiecePlacer('g', 2, new Pawn(tab, Color.White));
-            NewPiecePlacer('h', 2, new Pawn(tab, Color.White));
+            NewPiecePlacer('a', 2, new Pawn(tab, Color.White, this));
+            NewPiecePlacer('b', 2, new Pawn(tab, Color.White, this));
+            NewPiecePlacer('c', 2, new Pawn(tab, Color.White, this));
+            NewPiecePlacer('d', 2, new Pawn(tab, Color.White, this));
+            NewPiecePlacer('e', 2, new Pawn(tab, Color.White, this));
+            NewPiecePlacer('f', 2, new Pawn(tab, Color.White, this));
+            NewPiecePlacer('g', 2, new Pawn(tab, Color.White, this));
+            NewPiecePlacer('h', 2, new Pawn(tab, Color.White, this));
 
 
             NewPiecePlacer('a', 8, new Tower(tab, Color.Black));
@@ -233,14 +274,14 @@ namespace ChessPieces {
             NewPiecePlacer('f', 8, new Bishop(tab, Color.Black));
             NewPiecePlacer('g', 8, new Horse(tab, Color.Black));
             NewPiecePlacer('h', 8, new Tower(tab, Color.Black));
-            NewPiecePlacer('a', 7, new Pawn(tab, Color.Black));
-            NewPiecePlacer('b', 7, new Pawn(tab, Color.Black));
-            NewPiecePlacer('c', 7, new Pawn(tab, Color.Black));
-            NewPiecePlacer('d', 7, new Pawn(tab, Color.Black));
-            NewPiecePlacer('e', 7, new Pawn(tab, Color.Black));
-            NewPiecePlacer('f', 7, new Pawn(tab, Color.Black));
-            NewPiecePlacer('g', 7, new Pawn(tab, Color.Black));
-            NewPiecePlacer('h', 7, new Pawn(tab, Color.Black));
+            NewPiecePlacer('a', 7, new Pawn(tab, Color.Black, this));
+            NewPiecePlacer('b', 7, new Pawn(tab, Color.Black, this));
+            NewPiecePlacer('c', 7, new Pawn(tab, Color.Black, this));
+            NewPiecePlacer('d', 7, new Pawn(tab, Color.Black, this));
+            NewPiecePlacer('e', 7, new Pawn(tab, Color.Black, this));
+            NewPiecePlacer('f', 7, new Pawn(tab, Color.Black, this));
+            NewPiecePlacer('g', 7, new Pawn(tab, Color.Black, this));
+            NewPiecePlacer('h', 7, new Pawn(tab, Color.Black, this));
         }
 
     }

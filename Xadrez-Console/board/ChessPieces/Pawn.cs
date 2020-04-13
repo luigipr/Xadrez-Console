@@ -6,7 +6,10 @@ using board;
 namespace ChessPieces {
     class Pawn : Piece {
 
-        public Pawn(Board tab, Color color) : base(tab, color) { }
+        private ChessMatch match;
+        public Pawn(Board tab, Color color, ChessMatch match) : base(tab, color) {
+            this.match = match;
+        }
 
         public override string ToString() {
             return "P";
@@ -48,6 +51,17 @@ namespace ChessPieces {
                 if (Tab.ValidPosition(pos) && ExistingOponent(pos)) {
                     mat[pos.lines, pos.columns] = true;
                 }
+                // #specialmove en passant
+                if (Position.lines == 3) {
+                    Position left = new Position(Position.lines, Position.columns - 1);
+                    if (Tab.ValidPosition(left) && ExistingOponent(left) && Tab.piece(left) == match.EnPassantVulnerability) {
+                        mat[left.lines - 1, left.columns] = true;
+                    }
+                    Position right = new Position(Position.lines, Position.columns + 1);
+                    if (Tab.ValidPosition(right) && ExistingOponent(right) && Tab.piece(right) == match.EnPassantVulnerability) {
+                        mat[right.lines - 1, right.columns] = true;
+                    }
+                }
             } else {
                 pos.defineValues(Position.lines + 1, Position.columns);
                 if (Tab.ValidPosition(pos) && Free(pos)) {
@@ -64,6 +78,17 @@ namespace ChessPieces {
                 pos.defineValues(Position.lines + 1, Position.columns + 1);
                 if (Tab.ValidPosition(pos) && ExistingOponent(pos)) {
                     mat[pos.lines, pos.columns] = true;
+                }
+                // #specialmove en passant
+                if (Position.lines == 4) {
+                    Position left = new Position(Position.lines, Position.columns - 1);
+                    if (Tab.ValidPosition(left) && ExistingOponent(left) && Tab.piece(left) == match.EnPassantVulnerability) {
+                        mat[left.lines + 1, left.columns] = true;
+                    }
+                    Position right = new Position(Position.lines, Position.columns + 1);
+                    if (Tab.ValidPosition(right) && ExistingOponent(right) && Tab.piece(right) == match.EnPassantVulnerability) {
+                        mat[right.lines + 1, right.columns] = true;
+                    }
                 }
             }
             return mat;
