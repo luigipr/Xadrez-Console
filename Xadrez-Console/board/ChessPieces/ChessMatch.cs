@@ -34,6 +34,20 @@ namespace ChessPieces {
             if (capturedPiece != null) {
                 captured.Add(capturedPiece);
             }
+            // #specialplay small castling
+            if (p is King && destination.columns == origin.columns + 2) {
+                Position Torigin = new Position(origin.lines, origin.columns + 3);
+                Position Tdestination = new Position(origin.lines, origin.columns + 1);
+                Piece T = tab.RemovePiece(Torigin);
+                tab.dropPiece(T, Tdestination);
+            }
+            // #specialplay large castling
+            if (p is King && destination.columns == origin.columns - 2) {
+                Position Torigin = new Position(origin.lines, origin.columns - 4);
+                Position Tdestination = new Position(origin.lines, origin.columns - 1);
+                Piece T = tab.RemovePiece(Torigin);
+                tab.dropPiece(T, Tdestination);
+            }
             return capturedPiece;
         }
 
@@ -64,6 +78,22 @@ namespace ChessPieces {
             if (capturedPiece != null) {
                 tab.dropPiece(capturedPiece, destination);
                 captured.Remove(capturedPiece);
+            }
+            // #specialplay small castling
+            if (p is King && destination.columns == origin.columns + 2) {
+                Position Torigin = new Position(origin.lines, origin.columns + 3);
+                Position Tdestination = new Position(origin.lines, origin.columns + 1);
+                Piece T = tab.RemovePiece(Tdestination );
+                T.MovementDecrease();
+                tab.dropPiece(T, Torigin);
+            }
+            // #specialplay large castling
+            if (p is King && destination.columns == origin.columns - 2) {
+                Position Torigin = new Position(origin.lines, origin.columns - 4);
+                Position Tdestination = new Position(origin.lines, origin.columns - 1);
+                Piece T = tab.RemovePiece(Tdestination);
+                T.MovementDecrease();
+                tab.dropPiece(T, Torigin);
             }
             tab.dropPiece(p, origin);
         }
@@ -171,9 +201,6 @@ namespace ChessPieces {
             return true;
         }
 
-
-
-
         public void NewPiecePlacer(char column, int line, Piece piece) {
             tab.dropPiece(piece, new ChessPosition(column, line).toPosition());
             pieces.Add(piece);
@@ -184,7 +211,7 @@ namespace ChessPieces {
             NewPiecePlacer('b', 1, new Horse(tab, Color.White));
             NewPiecePlacer('c', 1, new Bishop(tab, Color.White));
             NewPiecePlacer('d', 1, new Queen(tab, Color.White));
-            NewPiecePlacer('e', 1, new King(tab, Color.White));
+            NewPiecePlacer('e', 1, new King(tab, Color.White, this));
             NewPiecePlacer('f', 1, new Bishop(tab, Color.White));
             NewPiecePlacer('g', 1, new Horse(tab, Color.White));
             NewPiecePlacer('h', 1, new Tower(tab, Color.White));
@@ -202,7 +229,7 @@ namespace ChessPieces {
             NewPiecePlacer('b', 8, new Horse(tab, Color.Black));
             NewPiecePlacer('c', 8, new Bishop(tab, Color.Black));
             NewPiecePlacer('d', 8, new Queen(tab, Color.Black));
-            NewPiecePlacer('e', 8, new King(tab, Color.Black));
+            NewPiecePlacer('e', 8, new King(tab, Color.Black, this));
             NewPiecePlacer('f', 8, new Bishop(tab, Color.Black));
             NewPiecePlacer('g', 8, new Horse(tab, Color.Black));
             NewPiecePlacer('h', 8, new Tower(tab, Color.Black));

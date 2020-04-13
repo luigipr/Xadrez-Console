@@ -6,7 +6,10 @@ using board;
 namespace ChessPieces {
     class King : Piece {
 
-        public King(Board tab, Color color) : base (tab, color) { }
+        private ChessMatch match;
+        public King(Board tab, Color color, ChessMatch match) : base (tab, color) {
+            this.match = match;
+        }
 
         public override string ToString() {
             return "K";
@@ -15,6 +18,11 @@ namespace ChessPieces {
         private bool CanMove(Position pos) {
             Piece p = Tab.piece(pos);
             return p == null || p.Color != Color;
+        }
+
+        private bool castlingTest(Position pos) {
+            Piece p = Tab.piece(pos);
+            return p != null && p is Tower && p.Color == Color && p.MovementTimes == 0;
         }
 
         public override bool[,] possibleMovements() {
@@ -59,6 +67,28 @@ namespace ChessPieces {
             pos.defineValues(Position.lines - 1, Position.columns - 1);
             if (Tab.ValidPosition(pos) && CanMove(pos)) {
                 mat[pos.lines, pos.columns] = true;
+            }
+            // #specialmove castling
+            if (MovementTimes ==0 && !match.Check) {
+                // small castling
+                Position postowersmall = new Position(Position.lines, Position.columns + 3);
+                if (castlingTest(postowersmall)) {
+                    Position p1 = new Position(Position.lines, Position.columns + 1);
+                    Position p2 = new Position(Position.lines, Position.columns + 2);
+                    if (Tab.piece(p1)==null && Tab.piece(p2)==null) {
+                        mat[Position.lines, Position.columns + 2] = true;
+                    }
+                }
+                // large castling
+                Position postowerlarge = new Position(Position.lines, Position.columns - 4);
+                if (castlingTest(postowerlarge)) {
+                    Position p1 = new Position(Position.lines, Position.columns - 1);
+                    Position p2 = new Position(Position.lines, Position.columns - 2);
+                    Position p3 = new Position(Position.lines, Position.columns - 3);
+                    if (Tab.piece(p1) == null && Tab.piece(p2) == null && Tab.piece(p3)==null) {
+                        mat[Position.lines, Position.columns - 2] = true;
+                    }
+                }
             }
             return mat;
         }
