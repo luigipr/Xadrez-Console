@@ -77,6 +77,19 @@ namespace ChessPieces {
                 undoMovement(origin, destination, capturedPiece);
                 throw new BoardException("You can't put yourself on check!");
             }
+            Piece p = tab.piece(destination);
+
+            // specialplay promotion
+            if (p is Pawn) {
+                if ((p.Color == Color.White && destination.lines == 0) || (p.Color == Color.Black && destination.lines == 7)) {
+                    p = tab.RemovePiece(destination);
+                    pieces.Remove(p);
+                    Piece queen = new Queen(tab, p.Color);
+                    tab.dropPiece(queen, destination);
+                    pieces.Add(queen);
+                }
+            }
+
             if (CheckCkecker(Oponent(CurrentPlayer))) {
                 Check = true;
             } else {
@@ -89,7 +102,6 @@ namespace ChessPieces {
                 Turn++;
                 ChangePlayer();
             }
-            Piece p = tab.piece(destination);
             // #specialmove en passant
             if (p is Pawn && (destination.lines == origin.lines - 2 || destination.lines == origin.lines + 2)) {
                 EnPassantVulnerability = p;

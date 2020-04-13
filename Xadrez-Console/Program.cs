@@ -16,7 +16,10 @@ namespace Xadrez_Console {
                         
 
                         Console.WriteLine();
-                        Console.Write("Origem: ");
+                        Console.WriteLine("Instructions: Select the tile you want to move to match the");
+                        Console.WriteLine("coordinates in the board. e.g.: b2 (lowercase letters only)");
+                        Console.WriteLine();
+                        Console.Write("Origin: ");
                         Position origin = Screen.readPosition().toPosition();
                         match.ValidatePositionOrigin(origin);
 
@@ -28,7 +31,7 @@ namespace Xadrez_Console {
                         Screen.printBoard(match.tab, possiblePositions);
 
                         Console.WriteLine();
-                        Console.Write("Destino: ");
+                        Console.Write("Destination: ");
                         Position destination = Screen.readPosition().toPosition();
                         match.ValidatePositionDestination(origin, destination);
 
