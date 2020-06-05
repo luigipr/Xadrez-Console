@@ -16,7 +16,7 @@ namespace Xadrez_Console {
                         
 
                         Console.WriteLine();
-                        Console.WriteLine("Instructions: Select the tile you want to move to match the");
+                        Console.WriteLine("Instructions: Select the piece you want to move by matching the");
                         Console.WriteLine("coordinates in the board. e.g.: b2 (lowercase letters only)");
                         Console.WriteLine();
                         Console.Write("Origin: ");
@@ -30,6 +30,9 @@ namespace Xadrez_Console {
                         Console.Clear();
                         Screen.printBoard(match.tab, possiblePositions);
 
+                        Console.WriteLine();
+                        Console.WriteLine("Instructions: Select the tile you want to move the piece you");
+                        Console.WriteLine("chose, you can only move to areas highlighted in the board.");
                         Console.WriteLine();
                         Console.Write("Destination: ");
                         Position destination = Screen.readPosition().toPosition();

@@ -153,7 +153,8 @@ namespace ChessPieces {
 
 
         public void ValidatePositionOrigin(Position pos) {
-            if (tab.piece(pos) == null) {
+            
+            if (pos.lines > 7 || pos.columns > 7 || tab.piece(pos) == null || pos == null)  {
                 throw new BoardException("There is no available piece on this position!");
             }
             if (CurrentPlayer != tab.piece(pos).Color) {
@@ -165,8 +166,8 @@ namespace ChessPieces {
 
         }
 
-        public void ValidatePositionDestination(Position origin, Position destination) {
-            if (!tab.piece(origin).CanMoveTo(destination)) {
+        public void ValidatePositionDestination(Position origin, Position destination) {           
+            if (destination.lines> 7 || destination.columns > 7 || !tab.piece(origin).CanMoveTo(destination)) {
                 throw new BoardException("Invalid target for piece movement!");
             }
         }

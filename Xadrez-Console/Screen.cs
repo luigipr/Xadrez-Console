@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using board;
 using ChessPieces;
+using System.Linq;
 
 namespace Xadrez_Console {
     class Screen {
@@ -83,8 +84,17 @@ namespace Xadrez_Console {
         public static ChessPosition readPosition() {
             string s = Console.ReadLine();
             char column = s[0];
+            if (char.IsUpper(column))
+            {
+                throw new BoardException("There is no available piece on this position!");
+            }
             int line = int.Parse(s[1] + "");
             return new ChessPosition(column, line);
+        }
+
+        private static bool isUpper(char column)
+        {
+            throw new NotImplementedException();
         }
 
         public static void PrintPiece(Piece piece) {
